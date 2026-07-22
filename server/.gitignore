@@ -68,3 +68,4 @@ server/.eslintcache
 .eslintcache
 .cache/
 .temp/
+/generated/prisma
