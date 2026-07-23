@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 10, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/sasha/Documents/www/JuniorMarket/client/app/%28page%29/%28home%29/page.tsx"],"sourcesContent":["\nexport default function Home() {\n  return (\n   <div>\n\n   </div>\n  );\n}\n"],"names":["Home"],"mappings":";;;;;;AACe,SAASA;IACtB,qBACC,4RAAC;;;;;AAIJ"}}]
+}
