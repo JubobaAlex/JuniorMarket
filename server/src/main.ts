@@ -17,6 +17,15 @@ async function bootstrap() {
     .setTitle('JuniorMarket API')
     .setDescription('Marketplace Backend API')
     .setVersion('1.0')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        description: 'Введите JWT токен',
+      },
+      'JWT-auth',
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
