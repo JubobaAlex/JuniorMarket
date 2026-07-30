@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/sasha/Documents/www/JuniorMarket/client/widgets/header/style/Header.css"],"sourcesContent":["header {\r\n    width: 100%;\r\n    border-bottom: 0.1px solid #2e2e2e;\r\n}"],"names":[],"mappings":"AAAA"}}]
+}

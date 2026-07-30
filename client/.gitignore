@@ -55,6 +55,7 @@ Thumbs.db
 
 # Next.js specific
 client/.next/
+.next
 client/out/
 client/.env*.local
 

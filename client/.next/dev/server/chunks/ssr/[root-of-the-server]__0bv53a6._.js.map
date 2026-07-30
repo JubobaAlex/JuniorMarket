@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 10, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/sasha/Documents/www/JuniorMarket/client/widgets/ui/Header.tsx"],"sourcesContent":["export default function Header() {\r\n    return (\r\n        <div>\r\n            1\r\n        </div>\r\n    )\r\n}"],"names":["Header"],"mappings":";;;;;;AAAe,SAASA;IACpB,qBACI,4RAAC;kBAAI;;;;;;AAIb"}},
+    {"offset": {"line": 29, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/sasha/Documents/www/JuniorMarket/client/app/%28page%29/%28home%29/page.tsx"],"sourcesContent":["import Header from '@/widgets/ui/Header';\nexport default function Home() {\n  return (\n   <div>\n      <Header />\n   </div>\n  );\n}\n"],"names":["Home"],"mappings":";;;;;AAAA;;;AACe,SAASA;IACtB,qBACC,4RAAC;kBACE,cAAA,4RAAC,iLAAM;;;;;;;;;;AAGb"}}]
+}

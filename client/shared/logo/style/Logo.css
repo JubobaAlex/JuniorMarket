@@ -1,0 +1,7 @@
+.container-Logo {
+    display: flex;
+    align-items: center;
+}
+h2 {
+    font-size: 40px;
+}

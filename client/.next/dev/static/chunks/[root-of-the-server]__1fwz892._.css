@@ -419,4 +419,16 @@
   }
 }
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: #fff;
+  background-color: #323333;
+  font-family: Arial;
+}
+
 /*# sourceMappingURL=%5Broot-of-the-server%5D__1fwz892._.css.map*/
