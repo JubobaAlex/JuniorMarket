@@ -294,4 +294,10 @@ body {
   font-family: Arial;
 }
 
+.page-register {
+  margin: auto;
+  position: relative;
+  inset: 0;
+}
+
 /*# sourceMappingURL=Documents_www_JuniorMarket_client_app_globals_css_1igg3k2._.single.css.map*/

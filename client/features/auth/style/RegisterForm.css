@@ -1,0 +1,134 @@
+.container-register {
+    display: flex;
+    background-color: white;
+    width: 400px;
+    height: 500px;
+    color: black;
+    border-radius: 30px;
+} 
+
+.container-text-register {
+    display: flex;
+    justify-content: center;
+}
+
+.container-text-register h2 {
+    font-size: 20px;
+}
+
+.container-pre {
+    position: relative;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    margin: auto;
+}
+
+.container-input-register {
+    display:  flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+input {
+    background-color: white;
+    color: black;
+    width: 300px;
+    height: 30px;
+    font-size: 18px;
+    border: 0.1px solid black;
+    border-radius: 10px;
+    padding: 5px 15px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+.container-button-register {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.container-button-register h2 {
+    font-size: 18px;
+    margin: 0 0 5px 0;
+    color: #333;
+}
+
+.container-button-register .role-button {
+    font-size: 16px;
+    cursor: pointer;
+    padding: 8px 20px;
+    border: 2px solid #ccc;
+    border-radius: 20px;
+    background-color: white;
+    color: #333;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    min-width: 120px;
+}
+
+.container-button-register .role-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.container-button-register .role-button:active {
+    transform: translateY(0);
+}
+
+.container-button-register .role-button.BUYER {
+    background-color: #4CAF50 !important;
+    color: white !important;
+    border-color: #4CAF50 !important;
+}
+
+.container-button-register .role-button.SELLER {
+    background-color: #2196F3 !important;
+    color: white !important;
+    border-color: #2196F3 !important;
+}
+
+.continue-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 10px 40px;
+    font-size: 18px;
+    border-radius: 25px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.continue-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.continue-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+}
+
+.role-buttons-container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.continue-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}

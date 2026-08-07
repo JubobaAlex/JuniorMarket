@@ -431,4 +431,10 @@ body {
   font-family: Arial;
 }
 
+.page-register {
+  margin: auto;
+  position: relative;
+  inset: 0;
+}
+
 /*# sourceMappingURL=%5Broot-of-the-server%5D__1fwz892._.css.map*/

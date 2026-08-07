@@ -1,0 +1,113 @@
+[33mcommit a3a482f337c3502c64c55f2eebce725f67f735cf[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m
+Author: Alexander <SaSkrkr123.com@mail.ru>
+Date:   Thu Jul 30 18:43:38 2026 +0300
+
+    create Header and Logo
+
+[33mcommit 4a6e56002d9fb6adfb2c69e4842ccd3015dc3fb7[m
+Author: Alexander <SaSkrkr123.com@mail.ru>
+Date:   Wed Jul 29 22:52:46 2026 +0300
+
+    create fsd and install jest
+
+[33mcommit 4732d1808858b8dd4ec4e9a649721b4fec406163[m
+Author: Alexander <SaSkrkr123.com@mail.ru>
+Date:   Wed Jul 29 22:43:19 2026 +0300
+
+    complete authentication module
+
+[33mcommit 256656026824e82de85d9628ba5ea79df0d40803[m
+Author: Alexander <SaSkrkr123.com@mail.ru>
+Date:   Mon Jul 27 16:13:17 2026 +0300
+
+    add jwt login
+
+[33mcommit 2882313dcb659403c533e0c9046ad9bca00a0b94[m
+Author: Alexander <SaSkrkr123.com@mail.ru>
+Date:   Mon Jul 27 15:57:32 2026 +0300
+
+    Removed other junk from the server folder.
+
+[33mcommit 8e582899c16f1d14fa12958a12477caef0bc72b7[m
+Author: Alexander <SaSkrkr123.com@mail.ru>
+Date:   Mon Jul 27 15:50:51 2026 +0300
+
+    JWT implementation and configuration
+
+[33mcommit fa930fdf321a96e6337d8cc810265bc4780189ad[m
+Author: Alexander <SaSkrkr123.com@mail.ru>
+Date:   Mon Jul 27 15:39:14 2026 +0300
+
+    implement user registration
+
+[33mcommit c6cbc32c5365f3ca8efc85d79ef87a5554ec66c0[m
+Author: Alexander <SaSkrkr123.com@mail.ru>
+Date:   Mon Jul 27 15:05:48 2026 +0300
+
+    add user registration endpoint
+
+[33mcommit e7757d25cd5767003f2a4e2bcdf5ba29de7e32c9[m
+Author: Alexander <SaSkrkr123.com@mail.ru>
+Date:   Mon Jul 27 14:53:00 2026 +0300
+
+    implement user registration service
+
+[33mcommit 2ad0d1659d4c17bc045b4afaee5ac3db99a2fac6[m
+Author: Alexander <SaSkrkr123.com@mail.ru>
+Date:   Mon Jul 27 14:34:38 2026 +0300
+
+    setup auth module
+
+[33mcommit 94291b45f7dd713c271cb3d4907220a6c327ae5c[m
+Author: Alexander <SaSkrkr123.com@mail.ru>
+Date:   Fri Jul 24 19:59:22 2026 +0300
+
+    implement users service
+
+[33mcommit b1a78866d36439630675ebd00368ce1a3a1e1628[m
+Author: Alexander <SaSkrkr123.com@mail.ru>
+Date:   Fri Jul 24 18:12:05 2026 +0300
+
+    add auth module and validation
+
+[33mcommit 65ed641bb0d1d275ea31344e5e0f4a619cd4c954[m
+Author: Alexander <SaSkrkr123.com@mail.ru>
+Date:   Fri Jul 24 17:57:36 2026 +0300
+
+    setup Prisma and users module
+
+[33mcommit 979ee615502230f713fa487c0a86b5fa22ea20d5[m
+Author: Alexander <SaSkrkr123.com@mail.ru>
+Date:   Thu Jul 23 14:43:09 2026 +0300
+
+    feat: setup Prisma module
+
+[33mcommit 09e1c17e23e4ef7ec3c569d2e46a60f1f6084b32[m
+Author: Alexander <SaSkrkr123.com@mail.ru>
+Date:   Thu Jul 23 14:22:33 2026 +0300
+
+    add user entity and users module
+
+[33mcommit 9c5a1e6069bfbc6dcf7ce606a3a44f091b3f2444[m
+Author: Alexander <SaSkrkr123.com@mail.ru>
+Date:   Thu Jul 23 14:20:58 2026 +0300
+
+    add user entity and users module
+
+[33mcommit 2f47549a168473f9f4581b512f2b99e2ab9d109d[m
+Author: Alexander <SaSkrkr123.com@mail.ru>
+Date:   Thu Jul 23 00:40:03 2026 +0300
+
+    init project with NestJS and Prisma setup
+
+[33mcommit af789236b5432df042e76b33e2988f6049d2f74a[m
+Author: Alexander <SaSkrkr123.com@mail.ru>
+Date:   Thu Jul 23 00:22:32 2026 +0300
+
+    installation of all dependencies
+
+[33mcommit b75ee56fd133fbda74592ddc2453ad7c882fdc27[m
+Author: Alexander <SaSkrkr123.com@mail.ru>
+Date:   Thu Jul 23 00:09:11 2026 +0300
+
+    start
