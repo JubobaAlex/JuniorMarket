@@ -1,9 +1,9 @@
 import { authData } from "../types/authData";
-async function handleRegister(data:authData) {
+async function handleLogin(data:Pick<authData , 'email' | 'password'>) {
     try {
         console.log(process.env.NEXT_PUBLIC_API_URL);
         const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+            `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
                 {
                     method: 'POST',
                     headers: {
@@ -25,4 +25,4 @@ async function handleRegister(data:authData) {
         throw errors;
     }
 }
-export default handleRegister;
+export default handleLogin;
