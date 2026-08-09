@@ -4,12 +4,15 @@ import { useState } from "react"
 import '../style/RegisterForm.css'
 import handleRegister from "../model/handleRegister"
 import handleLogin from "../model/handleLogin"
+import { useDispatch } from "react-redux"
+import { setJwt } from "../model/authSlice"
 export default function RegisterForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState<'BUYER' | 'SELLER'>('BUYER');
     const [error, setError] = useState<null | string>(null)
-    
+    const dispatch = useDispatch()
+
     const onSubmit = async () => {
         setError(null)
         try {
@@ -29,6 +32,7 @@ export default function RegisterForm() {
                 console.log('Авторизация:', loginData);
                 console.log('JWT токен:', loginData.access_token);
             }
+            dispatch(setJwt(loginData.access_token))
         } catch (err) {
             if(err instanceof Error) {
                 setError(err.message)

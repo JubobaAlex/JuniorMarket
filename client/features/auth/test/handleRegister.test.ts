@@ -1,5 +1,5 @@
 import handleRegister from "../model/handleRegister";
-describe('handleLogin', () => {
+describe('handleRegister', () => {
     beforeEach(() => {
         global.fetch = jest.fn();
     });
