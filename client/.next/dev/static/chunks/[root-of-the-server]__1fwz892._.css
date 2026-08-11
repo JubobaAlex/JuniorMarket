@@ -431,7 +431,7 @@ body {
   font-family: Arial;
 }
 
-.page-register {
+.page-register, .page-login {
   margin: auto;
   position: relative;
   inset: 0;
