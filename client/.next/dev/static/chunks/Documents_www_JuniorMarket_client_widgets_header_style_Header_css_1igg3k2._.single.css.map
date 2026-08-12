@@ -2,5 +2,5 @@
   "version": 3,
   "sources": [],
   "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/Documents/www/JuniorMarket/client/widgets/header/style/Header.css"],"sourcesContent":["header {\r\n    width: 100%;\r\n    height: 80px;\r\n    border-bottom: 0.1px solid #2e2e2e;\r\n    display: flex;\r\n    align-items: center;\r\n\r\n}"],"names":[],"mappings":"AAAA"}}]
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/Documents/www/JuniorMarket/client/widgets/header/style/Header.css"],"sourcesContent":["header {\r\n    width: 100%;\r\n    height: 80px;\r\n    border-bottom: 0.1px solid #2e2e2e;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: space-between;\r\n}"],"names":[],"mappings":"AAAA"}}]
 }

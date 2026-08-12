@@ -4,5 +4,5 @@ header {
     border-bottom: 0.1px solid #2e2e2e;
     display: flex;
     align-items: center;
-
+    justify-content: space-between;
 }

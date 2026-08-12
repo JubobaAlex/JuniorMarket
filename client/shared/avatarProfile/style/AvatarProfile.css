@@ -1,0 +1,25 @@
+/* Анимация при наведении */
+@keyframes avatar-img-hover {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    }
+    100% {
+        transform: scale(1.15);
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+    }
+}
+
+.avatar-img {
+    height: 50px;
+    width: 50px;
+    border-radius: 45%;
+    background-color: white;
+    transition: all 0.3s ease; 
+    cursor: pointer; 
+}
+.avatar-img:hover {
+    animation-name: avatar-img-hover;
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards; 
+}
