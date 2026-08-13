@@ -3,8 +3,11 @@ import {
   Controller,
   Get,
   Post,
+  Res,
   UseGuards,
 } from '@nestjs/common';
+import { Response } from 'express';
+
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -35,9 +38,23 @@ export class AuthController {
     summary: 'Авторизация пользователя',
   })
   @Post('login')
-  login(@Body() dto: LoginDto) {
-    return this.authService.login(dto);
-  }
+  async login(
+      @Body() dto: LoginDto,
+      @Res({ passthrough: true }) response: Response,
+  ) {
+    const data = await this.authService.login(dto);
+
+    response.cookie('jwt', data.access_token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    return {
+        message: 'Успешная авторизация',
+    };
+}
 
   @ApiBearerAuth('JWT-auth')
   @UseGuards(JwtAuthGuard)
