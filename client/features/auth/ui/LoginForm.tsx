@@ -4,9 +4,11 @@ import { useState } from "react"
 import '../style/LoginForm.css'
 import handleLogin from "../model/handleLogin"
 import { useDispatch } from "react-redux"
-import { setJwt } from "../model/authSlice"
-
+import { useRouter } from "next/navigation"
+import { setUser } from "../model/authSlice"
+import handleMe from "../model/handleMe"
 export default function LoginForm() {
+    const router = useRouter()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState<null | string>(null);
@@ -17,18 +19,14 @@ export default function LoginForm() {
         setError(null);
 
         try {
-            const loginData = await handleLogin({
+            await handleLogin({
                 email,
                 password,
             });
 
-            if (process.env.NODE_ENV === 'development') {
-                console.log('Авторизация:', loginData);
-                console.log('JWT токен:', loginData.access_token);
-            }
+            const user = await handleMe();
 
-            dispatch(setJwt(loginData.access_token));
-
+            dispatch(setUser(user));
         } catch (err) {
             if (err instanceof Error) {
                 setError(err.message);

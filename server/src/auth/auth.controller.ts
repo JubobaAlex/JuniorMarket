@@ -6,7 +6,7 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { Response } from 'express';
+import type { Response } from 'express';
 
 import {
   ApiBearerAuth,
@@ -65,4 +65,16 @@ export class AuthController {
   me(@CurrentUser() user: any) {
     return user;
   }
+  @Post('logout')
+  logout(@Res({ passthrough: true }) response: Response) {
+    response.clearCookie('jwt', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+    });
+
+    return {
+        message: 'Выход выполнен успешно',
+    };
+}
 }

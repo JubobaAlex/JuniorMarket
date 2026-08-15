@@ -1,24 +1,35 @@
-'use client'
-import { RootState } from "@/app/store";
-import AvatarProfile from "@/shared/avatarProfile/ui/AvatarProfile";
-import Link from "next/link"
-import { useSelector } from "react-redux"
-import "../style/AuthButton.css" 
+'use client';
+
+import { RootState } from '@/app/store';
+import AvatarProfile from '@/shared/avatarProfile/ui/AvatarProfile';
+import Link from 'next/link';
+import { useSelector } from 'react-redux';
+import '../style/AuthButton.css';
 
 export default function AuthButton() {
-    const jwt = useSelector((state: RootState) => state.auth.jwt)
-    
-    if (!jwt) {
+    const user = useSelector(
+        (state: RootState) => state.auth.user
+    );
+
+    const isLoading = useSelector(
+        (state: RootState) => state.auth.isLoading
+    );
+
+    if (isLoading) {
+        return null;
+    }
+
+    if (!user) {
         return (
             <div className="auth-buttons">
-                <Link 
+                <Link
                     href="/login"
                     className="btn-login"
                 >
                     Войти
                 </Link>
 
-                <Link 
+                <Link
                     href="/register"
                     className="btn-register"
                 >
@@ -27,12 +38,13 @@ export default function AuthButton() {
             </div>
         );
     }
-    
+
     return (
-        <Link href="/profile" className="avatar-link">
-            <div>
-                <AvatarProfile />
-            </div>
+        <Link
+            href="/profile"
+            className="avatar-link"
+        >
+            <AvatarProfile />
         </Link>
-    )
+    );
 }

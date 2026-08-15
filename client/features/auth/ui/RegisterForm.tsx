@@ -5,7 +5,8 @@ import '../style/RegisterForm.css'
 import handleRegister from "../model/handleRegister"
 import handleLogin from "../model/handleLogin"
 import { useDispatch } from "react-redux"
-import { setJwt } from "../model/authSlice"
+import handleMe from "../model/handleMe"
+import { setUser } from "../model/authSlice"
 export default function RegisterForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -13,31 +14,29 @@ export default function RegisterForm() {
     const [error, setError] = useState<null | string>(null)
     const dispatch = useDispatch()
 
-    const onSubmit = async () => {
-        setError(null)
+        const onSubmit = async () => {
+        setError(null);
+
         try {
-            const data = await handleRegister({
+            await handleRegister({
                 email,
                 password,
                 role,
             });
 
-            const loginData = await handleLogin({
+            await handleLogin({
                 email,
-                password
+                password,
             });
 
-            if (process.env.NODE_ENV === 'development') {
-                console.log('Регистрация:', data);
-                console.log('Авторизация:', loginData);
-                console.log('JWT токен:', loginData.access_token);
-            }
-            dispatch(setJwt(loginData.access_token))
+            const user = await handleMe();
+
+            dispatch(setUser(user));
         } catch (err) {
-            if(err instanceof Error) {
-                setError(err.message)
+            if (err instanceof Error) {
+                setError(err.message);
             } else {
-                setError('Произлошла ошибка')
+                setError('Произошла ошибка');
             }
         }
     };
