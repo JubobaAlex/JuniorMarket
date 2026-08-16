@@ -7,12 +7,14 @@ import handleLogin from "../model/handleLogin"
 import { useDispatch } from "react-redux"
 import handleMe from "../model/handleMe"
 import { setUser } from "../model/authSlice"
+import { useRouter } from 'next/navigation';
 export default function RegisterForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState<'BUYER' | 'SELLER'>('BUYER');
     const [error, setError] = useState<null | string>(null)
     const dispatch = useDispatch()
+    const router = useRouter()
 
         const onSubmit = async () => {
         setError(null);
@@ -32,6 +34,7 @@ export default function RegisterForm() {
             const user = await handleMe();
 
             dispatch(setUser(user));
+            router.push('/');
         } catch (err) {
             if (err instanceof Error) {
                 setError(err.message);

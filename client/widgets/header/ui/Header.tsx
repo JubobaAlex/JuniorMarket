@@ -8,7 +8,7 @@ export default function Header() {
             <div style={{margin:'10px'}}>
                 <Link href={'/'}><Logo /></Link>
             </div>   
-            <div>
+            <div style={{margin:'10px'}}>
                 <AuthButton />
             </div>
         </header>

@@ -82,3 +82,13 @@
     font-size: 14px;
     max-width: 330px;
 }
+
+@media(max-width: 480px) {
+    .container-login {
+        width: 300px !important;
+        height: 350px !important;
+    }
+    input {
+        width: 250px !important;
+    }
+}

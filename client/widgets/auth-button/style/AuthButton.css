@@ -1,11 +1,10 @@
-/* Контейнер */
 .auth-buttons {
     display: flex;
     align-items: center;
     gap: 12px;
+    flex-wrap: wrap;
 }
 
-/* Кнопка "Войти" - оранжевая */
 .btn-login {
     padding: 10px 28px;
     font-size: 15px;
@@ -20,6 +19,7 @@
     cursor: pointer;
     display: inline-block;
     box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3);
+    white-space: nowrap;
 }
 
 .btn-login:hover {
@@ -33,7 +33,6 @@
     box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3);
 }
 
-/* Кнопка "Регистрация" - оранжевая обводка */
 .btn-register {
     padding: 10px 28px;
     font-size: 15px;
@@ -47,6 +46,7 @@
     transition: all 0.25s ease;
     cursor: pointer;
     display: inline-block;
+    white-space: nowrap;
 }
 
 .btn-register:hover {
@@ -61,7 +61,6 @@
     transform: translateY(0px);
 }
 
-/* Аватар */
 .avatar-link {
     display: inline-block;
     transition: all 0.3s ease;
@@ -71,4 +70,53 @@
 .avatar-link:hover {
     transform: scale(1.1);
     box-shadow: 0 0 0 3px #f97316;
+}
+
+
+@media (max-width: 768px) {
+    .btn-login,
+    .btn-register {
+        height: 10px;
+        padding: 0 10px;
+        font-size: 10px;
+        line-height: 10px;
+        min-height: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-buttons {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .btn-login,
+    .btn-register {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 16px;
+        text-align: center;
+        white-space: normal; 
+    }
+
+    .btn-login:hover {
+        transform: none;
+        background: #f97316;
+    }
+
+    .btn-register:hover {
+        transform: none;
+        background: transparent;
+        border-color: #f97316;
+        color: #f97316;
+    }
+
+    .avatar-link:hover {
+        transform: none;
+        box-shadow: none;
+    }
 }

@@ -1,4 +1,10 @@
 /* [project]/Documents/www/JuniorMarket/client/shared/logo/style/Logo.css [app-client] (css) */
+@media (max-width: 480px) {
+  h2 {
+    display: none;
+  }
+}
+
 .container-Logo {
   align-items: center;
   display: flex;

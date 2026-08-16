@@ -8,11 +8,11 @@ import { useRouter } from "next/navigation"
 import { setUser } from "../model/authSlice"
 import handleMe from "../model/handleMe"
 export default function LoginForm() {
-    const router = useRouter()
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState<null | string>(null);
-
+    const router = useRouter()
     const dispatch = useDispatch();
 
     const onSubmit = async () => {
@@ -27,6 +27,7 @@ export default function LoginForm() {
             const user = await handleMe();
 
             dispatch(setUser(user));
+            router.push('/');
         } catch (err) {
             if (err instanceof Error) {
                 setError(err.message);
