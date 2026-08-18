@@ -13,14 +13,13 @@ enum Role {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  email     String    @unique
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
   password  String
-  role      Role      @default(BUYER)
-  createdAt DateTime  @default(now())
-  products  Product[]
+  role      Role     @default(BUYER)
+  createdAt DateTime @default(now())
+  products Product[]
 }
-
 model Product {
   id          Int      @id @default(autoincrement())
   title       String
@@ -30,6 +29,6 @@ model Product {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  sellerId Int
-  seller   User @relation(fields: [sellerId], references: [id])
+  sellerId    Int
+  seller      User     @relation(fields: [sellerId], references: [id])
 }
