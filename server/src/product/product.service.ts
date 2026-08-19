@@ -4,6 +4,7 @@ import {
     NotFoundException,
 } from '@nestjs/common';
 
+import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateProductDto } from './dto/create-product.dto';
 
@@ -13,7 +14,10 @@ export class ProductService {
         private readonly prisma: PrismaService,
     ) {}
 
-    async create(dto: CreateProductDto, sellerId: number) {
+    async create(
+        dto: CreateProductDto,
+        sellerId: number,
+    ) {
         return this.prisma.product.create({
             data: {
                 title: dto.title,
@@ -54,9 +58,38 @@ export class ProductService {
         });
 
         if (!product) {
-            throw new NotFoundException('Product not found');
+            throw new NotFoundException(
+                'Product not found',
+            );
         }
 
         return product;
+    }
+
+    async update(
+        id: number,
+        dto: UpdateProductDto,
+        sellerId: number,
+    ) {
+        const product = await this.prisma.product.findUnique({
+            where: { id },
+        });
+
+        if (!product) {
+            throw new NotFoundException(
+                'Product not found',
+            );
+        }
+
+        if (product.sellerId !== sellerId) {
+            throw new ForbiddenException(
+                'You can only update your own products',
+            );
+        }
+
+        return this.prisma.product.update({
+            where: { id },
+            data: dto,
+        });
     }
 }
