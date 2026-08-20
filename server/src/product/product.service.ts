@@ -92,4 +92,24 @@ export class ProductService {
             data: dto,
         });
     }
+    async remove(id: number, sellerId: number) {
+    const product = await this.prisma.product.findUnique({
+        where: { id },
+    });
+
+    if (!product) {
+        throw new NotFoundException('Product not found');
+    }
+
+    if (product.sellerId !== sellerId) {
+        throw new ForbiddenException(
+            'You can only delete your own products',
+        );
+    }
+
+    return this.prisma.product.delete({
+        where: { id },
+    });
+
+}
 }

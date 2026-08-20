@@ -1,6 +1,7 @@
 import {
     Body,
     Controller,
+    Delete,
     Get,
     Param,
     ParseIntPipe,
@@ -71,6 +72,23 @@ export class ProductController {
         return this.productService.update(
             id,
             dto,
+            user.id,
+        );
+    }
+
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(Role.SELLER)
+    @Delete(':id')
+    remove(
+        @Param('id', ParseIntPipe) id: number,
+        @CurrentUser() user: {
+            id: number;
+            email: string;
+            role: Role;
+        },
+    ) {
+        return this.productService.remove(
+            id,
             user.id,
         );
     }
