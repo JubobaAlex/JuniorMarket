@@ -8,12 +8,13 @@ import {
     Patch,
     Post,
     UseGuards,
+    Query
 } from '@nestjs/common';
 
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-
+import { QueryProductDto } from './dto/query-product.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 
@@ -46,10 +47,11 @@ export class ProductController {
     }
 
     @Get()
-    findAll() {
-        return this.productService.findAll();
+    findAll(
+        @Query() query: QueryProductDto,
+    ) {
+        return this.productService.findAll(query);
     }
-
     @Get(':id')
     findOne(
         @Param('id', ParseIntPipe) id: number,

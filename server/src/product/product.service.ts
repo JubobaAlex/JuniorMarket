@@ -3,7 +3,7 @@ import {
     Injectable,
     NotFoundException,
 } from '@nestjs/common';
-
+import { QueryProductDto } from './dto/query-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -29,8 +29,32 @@ export class ProductService {
         });
     }
 
-    async findAll() {
-        return this.prisma.product.findMany({
+    async findAll(query: QueryProductDto) {
+    const {
+        page = 1,
+        limit = 10,
+        search,
+    } = query;
+
+    const skip = (page - 1) * limit;
+
+    const where = search
+        ? {
+              title: {
+                  contains: search,
+                  mode: 'insensitive' as const,
+              },
+          }
+        : {};
+
+    const [products, total] = await Promise.all([
+        this.prisma.product.findMany({
+            where,
+            skip,
+            take: limit,
+            orderBy: {
+                createdAt: 'desc',
+            },
             include: {
                 seller: {
                     select: {
@@ -40,8 +64,24 @@ export class ProductService {
                     },
                 },
             },
-        });
-    }
+        }),
+
+        this.prisma.product.count({
+            where,
+        }),
+    ]);
+
+    return {
+        products,
+
+        pagination: {
+            total,
+            page,
+            limit,
+            totalPages: Math.ceil(total / limit),
+        },
+    };
+}
 
     async findOne(id: number) {
         const product = await this.prisma.product.findUnique({
