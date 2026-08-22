@@ -7,14 +7,21 @@ import {
     ParseIntPipe,
     Patch,
     Post,
+    Query,
     UseGuards,
-    Query
 } from '@nestjs/common';
 
+import {
+    ApiQuery,
+    ApiTags,
+} from '@nestjs/swagger';
+
 import { ProductService } from './product.service';
+
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { QueryProductDto } from './dto/query-product.dto';
+
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 
@@ -23,6 +30,7 @@ import { Role } from '@prisma/client';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
 
+@ApiTags('Product')
 @Controller('products')
 export class ProductController {
     constructor(
@@ -46,12 +54,48 @@ export class ProductController {
         );
     }
 
+    @ApiQuery({
+        name: 'page',
+        required: false,
+        type: Number,
+        example: 1,
+        description: 'Номер страницы',
+    })
+    @ApiQuery({
+        name: 'limit',
+        required: false,
+        type: Number,
+        example: 10,
+        description: 'Количество товаров на странице',
+    })
+    @ApiQuery({
+        name: 'search',
+        required: false,
+        type: String,
+        example: 'iphone',
+        description: 'Поиск по названию товара',
+    })
+    @ApiQuery({
+        name: 'minPrice',
+        required: false,
+        type: Number,
+        example: 100,
+        description: 'Минимальная цена',
+    })
+    @ApiQuery({
+        name: 'maxPrice',
+        required: false,
+        type: Number,
+        example: 1000,
+        description: 'Максимальная цена',
+    })
     @Get()
     findAll(
         @Query() query: QueryProductDto,
     ) {
         return this.productService.findAll(query);
     }
+
     @Get(':id')
     findOne(
         @Param('id', ParseIntPipe) id: number,

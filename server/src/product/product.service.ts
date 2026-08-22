@@ -29,32 +29,48 @@ export class ProductService {
         });
     }
 
-    async findAll(query: QueryProductDto) {
+   async findAll(query: QueryProductDto) {
     const {
         page = 1,
         limit = 10,
         search,
+        minPrice,
+        maxPrice,
     } = query;
 
     const skip = (page - 1) * limit;
 
-    const where = search
-        ? {
-              title: {
-                  contains: search,
-                  mode: 'insensitive' as const,
-              },
-          }
-        : {};
+    const where = {
+        ...(search && {
+            title: {
+                contains: search,
+                mode: 'insensitive' as const,
+            },
+        }),
+
+        ...((minPrice !== undefined || maxPrice !== undefined) && {
+            price: {
+                ...(minPrice !== undefined && {
+                    gte: minPrice,
+                }),
+
+                ...(maxPrice !== undefined && {
+                    lte: maxPrice,
+                }),
+            },
+        }),
+    };
 
     const [products, total] = await Promise.all([
         this.prisma.product.findMany({
             where,
             skip,
             take: limit,
+
             orderBy: {
                 createdAt: 'desc',
             },
+
             include: {
                 seller: {
                     select: {

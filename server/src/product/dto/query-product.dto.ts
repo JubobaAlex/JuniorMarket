@@ -2,6 +2,7 @@ import { Transform } from 'class-transformer';
 import {
     IsInt,
     IsOptional,
+    IsNumber,
     IsString,
     Max,
     Min,
@@ -24,4 +25,16 @@ export class QueryProductDto {
     @IsOptional()
     @IsString()
     search?: string;
+
+    @IsOptional()
+    @Transform(({ value }) => Number(value))
+    @IsNumber()
+    @Min(0)
+    minPrice?: number;
+
+    @IsOptional()
+    @Transform(({ value }) => Number(value))
+    @IsNumber()
+    @Min(0)
+    maxPrice?: number;
 }
