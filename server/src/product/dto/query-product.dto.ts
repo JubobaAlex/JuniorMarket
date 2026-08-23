@@ -1,8 +1,9 @@
 import { Transform } from 'class-transformer';
 import {
+    IsIn,
     IsInt,
-    IsOptional,
     IsNumber,
+    IsOptional,
     IsString,
     Max,
     Min,
@@ -37,4 +38,12 @@ export class QueryProductDto {
     @IsNumber()
     @Min(0)
     maxPrice?: number;
+
+    @IsOptional()
+    @IsIn(['price', 'createdAt'])
+    sortBy?: 'price' | 'createdAt' = 'createdAt';
+
+    @IsOptional()
+    @IsIn(['asc', 'desc'])
+    order?: 'asc' | 'desc' = 'desc';
 }
