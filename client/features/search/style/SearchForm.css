@@ -1,0 +1,27 @@
+.container-search {
+    width: 100%;
+    height: 50px;
+    border-bottom: 0.1px solid #2e2e2e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-search input {
+    border:  0.5px solid #ea580c;;
+    width: 600px;
+    border-radius: 10px;
+    outline: none;
+    font-size: 15px;
+    padding: 8px 15px;
+    height: 40px;
+    box-sizing: border-box;
+    transition: border 0.2s ease;
+    
+}
+
+@media (max-width: 480px) {
+    .container-search input {
+        width: 300px;
+    }
+}
