@@ -1,3 +1,4 @@
+/* RegisterForm.css */
 .container-register {
     display: flex;
     background-color: white;
@@ -5,7 +6,7 @@
     height: 500px;
     color: black;
     border-radius: 30px;
-} 
+}
 
 .container-text-register {
     display: flex;
@@ -26,12 +27,13 @@
 }
 
 .container-input-register {
-    display:  flex;
+    display: flex;
     gap: 20px;
     flex-direction: column;
 }
 
-input {
+/* ТОЛЬКО ДЛЯ REGISTER FORM */
+.register-input {
     background-color: white;
     color: black;
     width: 300px;
@@ -44,7 +46,7 @@ input {
     transition: all 0.3s ease;
 }
 
-input:focus {
+.register-input:focus {
     border-color: #4CAF50;
     box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
 }
@@ -98,7 +100,7 @@ input:focus {
 }
 
 .continue-button {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #ea580c;
     color: white;
     border: none;
     padding: 10px 40px;
@@ -138,7 +140,7 @@ input:focus {
         width: 300px;
         height: 350px;
     }
-    input {
+    .register-input {
         width: 250px;
     }
 }

@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux"
 import handleMe from "../model/handleMe"
 import { setUser } from "../model/authSlice"
 import { useRouter } from 'next/navigation';
+
 export default function RegisterForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -16,7 +17,7 @@ export default function RegisterForm() {
     const dispatch = useDispatch()
     const router = useRouter()
 
-        const onSubmit = async () => {
+    const onSubmit = async () => {
         setError(null);
 
         try {
@@ -53,12 +54,14 @@ export default function RegisterForm() {
                 
                 <div className="container-input-register">
                     <input 
+                        className="register-input"
                         placeholder="Введите вашу почту"
                         type="email" 
                         value={email}
                         onChange={(event) => setEmail(event.target.value)} 
                     />
                     <input 
+                        className="register-input" 
                         placeholder="Введите пароль"
                         type="password" 
                         value={password}

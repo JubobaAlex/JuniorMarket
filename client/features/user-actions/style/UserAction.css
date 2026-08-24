@@ -1,0 +1,12 @@
+.container-user-action {
+    display: flex;
+    gap: 15px;
+    
+}
+@media (max-width: 480px) {
+    .container-user-action {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+}

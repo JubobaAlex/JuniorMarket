@@ -7,7 +7,7 @@
     align-items: center;
 }
 
-.container-search input {
+.search-input {
     border:  0.5px solid #ea580c;;
     width: 600px;
     border-radius: 10px;
