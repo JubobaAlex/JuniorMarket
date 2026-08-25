@@ -1,5 +1,5 @@
 {
   "/(page)/(home)/page": "app/(page)/(home)/page.js",
-  "/(page)/register/page": "app/(page)/register/page.js",
-  "/_not-found/page": "app/_not-found/page.js"
+  "/(page)/login/page": "app/(page)/login/page.js",
+  "/(page)/register/page": "app/(page)/register/page.js"
 }
