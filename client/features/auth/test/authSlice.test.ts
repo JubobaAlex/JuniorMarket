@@ -35,9 +35,8 @@ describe('тестируем clearUser', () => {
         
         expect(action).toEqual({
             type: 'auth/clearUser',
-        });
-        // Проверяем, что payload не определен
-        expect(action.payload).toBeUndefined(); // ✅ Исправлено
+        })
+        expect(action.payload).toBeUndefined();
     });
     
     test('должен очистить пользователя из состояния', () => {
