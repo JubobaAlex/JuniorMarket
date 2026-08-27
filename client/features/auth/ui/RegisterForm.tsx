@@ -10,8 +10,8 @@ import { setUser } from "../model/authSlice"
 import { useRouter } from 'next/navigation';
 
 export default function RegisterForm() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
     const [role, setRole] = useState<'BUYER' | 'SELLER'>('BUYER');
     const [error, setError] = useState<null | string>(null)
     const dispatch = useDispatch()
