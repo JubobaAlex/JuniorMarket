@@ -1,11 +1,26 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import {
+    useEffect,
+    useRef,
+} from "react";
+
+import { useSelector } from "react-redux";
+
+import { RootState } from "@/app/store";
+
 import ProductCard from "@/entities/ProductCard/ui/ProductCard";
+
 import useProductFeed from "../model/useProductFeed";
+
 import "../style/ProductFeed.css";
 
 export default function ProductFeed() {
+    const search = useSelector(
+        (state: RootState) =>
+            state.productSearch.search,
+    );
+
     const {
         products,
         isLoading,
@@ -13,18 +28,22 @@ export default function ProductFeed() {
         error,
         hasMore,
         loadMore,
-    } = useProductFeed();
+    } = useProductFeed(search);
 
-    const observerRef = useRef<IntersectionObserver | null>(
-        null,
-    );
+    const observerRef =
+        useRef<IntersectionObserver | null>(
+            null,
+        );
 
-    const lastProductRef = useRef<HTMLDivElement | null>(
-        null,
-    );
+    const lastProductRef =
+        useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        if (isLoading || !hasMore) {
+        if (isLoading) {
+            return;
+        }
+
+        if (!hasMore) {
             return;
         }
 
@@ -34,19 +53,20 @@ export default function ProductFeed() {
 
         observerRef.current?.disconnect();
 
-        observerRef.current = new IntersectionObserver(
-            (entries) => {
-                if (
-                    entries[0].isIntersecting &&
-                    !isLoadingMore
-                ) {
-                    loadMore();
-                }
-            },
-            {
-                rootMargin: "500px",
-            },
-        );
+        observerRef.current =
+            new IntersectionObserver(
+                (entries) => {
+                    if (
+                        entries[0].isIntersecting &&
+                        !isLoadingMore
+                    ) {
+                        loadMore();
+                    }
+                },
+                {
+                    rootMargin: "500px",
+                },
+            );
 
         observerRef.current.observe(
             lastProductRef.current,
@@ -64,61 +84,77 @@ export default function ProductFeed() {
     ]);
 
     if (isLoading) {
-        return <div style={{display:'flex', justifyContent:'center'}}>Загрузка товаров...</div>;
+        return (
+            <div className="product-feed-message">
+                {search
+                    ? "Ищем товары..."
+                    : "Загрузка товаров..."}
+            </div>
+        );
     }
 
     if (error && products.length === 0) {
-        return <div style={
-            {
-                display: "flex", 
-                justifyContent: "center", 
-                alignItems: "center", 
-                padding: "40px 20px",
-                color: "#dc3545"
-            }
-        }>Ошибка {error}</div>
+        return (
+            <div className="product-feed-message">
+                Ошибка: {error}
+            </div>
+        );
     }
 
     if (products.length === 0) {
-        return <div style={{display:'flex', justifyContent:'center',alignItems:'center'}}>Товаров пока нет</div>;
+        return (
+            <div className="product-feed-message">
+                {search
+                    ? `По запросу «${search}» ничего не найдено`
+                    : "Товаров пока нет"}
+            </div>
+        );
     }
 
     return (
         <>
             <div className="product-feed">
-                {products.map((product, index) => {
-                    const isLast =
-                        index === products.length - 1;
+                {products.map(
+                    (product, index) => {
+                        const isLast =
+                            index ===
+                            products.length - 1;
 
-                    if (isLast) {
+                        if (isLast) {
+                            return (
+                                <div
+                                    key={product.id}
+                                    ref={
+                                        lastProductRef
+                                    }
+                                >
+                                    <ProductCard
+                                        product={
+                                            product
+                                        }
+                                    />
+                                </div>
+                            );
+                        }
+
                         return (
-                            <div
-                                ref={lastProductRef}
+                            <ProductCard
                                 key={product.id}
-                            >
-                                <ProductCard
-                                    product={product}
-                                />
-                            </div>
+                                product={product}
+                            />
                         );
-                    }
-
-                    return (
-                        <ProductCard
-                            key={product.id}
-                            product={product}
-                        />
-                    );
-                })}
+                    },
+                )}
             </div>
 
             {isLoadingMore && (
-                <div >
-                    Загрузка следующих товаров...
+                <div className="product-feed-message">
+                    Загружаем ещё товары...
                 </div>
             )}
-            {error && (
-                <div>
+
+            {error && products.length > 0 && (
+                <div className="product-feed-message">
                     Ошибка загрузки: {error}
                 </div>
             )}

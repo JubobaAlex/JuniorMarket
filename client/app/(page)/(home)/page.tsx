@@ -5,8 +5,8 @@ export default function Home() {
   return (
    <div>
       <Header />
-      <ProductSearch />
-      <ProductFeed />
+      <ProductSearch/>
+      <ProductFeed/>
    </div>
   );
 }
