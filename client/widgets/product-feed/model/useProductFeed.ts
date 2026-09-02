@@ -29,8 +29,6 @@ export default function useProductFeed(search = "") {
         searchRef.current = search;
     }, [search]);
 
-    // Загружаем первую страницу
-    // при открытии страницы или изменении поиска
     useEffect(() => {
         let cancelled = false;
 
@@ -84,8 +82,6 @@ export default function useProductFeed(search = "") {
             cancelled = true;
         };
     }, [search]);
-
-    // Infinite scroll
     const loadMore = useCallback(async () => {
         if (loadingRef.current) {
             return;
