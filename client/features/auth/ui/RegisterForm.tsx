@@ -14,11 +14,13 @@ export default function RegisterForm() {
     const [password, setPassword] = useState<string>('');
     const [role, setRole] = useState<'BUYER' | 'SELLER'>('BUYER');
     const [error, setError] = useState<null | string>(null)
+    const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch()
     const router = useRouter()
 
     const onSubmit = async () => {
         setError(null);
+        setIsLoading(true);
 
         try {
             await handleRegister({
@@ -38,34 +40,62 @@ export default function RegisterForm() {
             router.push('/');
         } catch (err) {
             if (err instanceof Error) {
-                setError(err.message);
+                let userMessage = err.message;
+                if (err.message.includes('email')) {
+                    userMessage = 'Пожалуйста, введите корректный email';
+                } else if (err.message.includes('password')) {
+                    userMessage = 'Пароль должен содержать минимум 6 символов';
+                } else if (err.message.includes('already exists')) {
+                    userMessage = 'Пользователь с таким email уже существует';
+                }
+                setError(userMessage);
             } else {
-                setError('Произошла ошибка');
+                setError('Произошла неизвестная ошибка. Попробуйте позже.');
             }
+        } finally {
+            setIsLoading(false);
         }
     };
 
     return (
         <div className="container-register">
             <div className="container-pre">
+                {/* Ошибка в фиксированном контейнере без иконки */}
+                <div className="error-wrapper">
+                    {error && (
+                        <div className="error-banner">
+                            <span className="error-text">{error}</span>
+                            <button 
+                                className="error-close-btn" 
+                                onClick={() => setError(null)}
+                                aria-label="Закрыть ошибку"
+                            >
+                                ✕
+                            </button>
+                        </div>
+                    )}
+                </div>
+
                 <div className="container-text-register">
                     <h2>Регистрация</h2>
                 </div>
                 
                 <div className="container-input-register">
                     <input 
-                        className="register-input"
+                        className={`register-input ${error ? 'input-error' : ''}`}
                         placeholder="Введите вашу почту"
                         type="email" 
                         value={email}
-                        onChange={(event) => setEmail(event.target.value)} 
+                        onChange={(event) => setEmail(event.target.value)}
+                        disabled={isLoading}
                     />
                     <input 
-                        className="register-input" 
+                        className={`register-input ${error ? 'input-error' : ''}`}
                         placeholder="Введите пароль"
                         type="password" 
                         value={password}
-                        onChange={(event) => setPassword(event.target.value)} 
+                        onChange={(event) => setPassword(event.target.value)}
+                        disabled={isLoading}
                     />
                 </div>
 
@@ -77,12 +107,14 @@ export default function RegisterForm() {
                         <button 
                             className={`role-button ${role === 'BUYER' ? 'BUYER' : ''}`} 
                             onClick={() => setRole('BUYER')}
+                            disabled={isLoading}
                         >
                             Покупатель
                         </button>
                         <button 
                             className={`role-button ${role === 'SELLER' ? 'SELLER' : ''}`} 
                             onClick={() => setRole('SELLER')}
+                            disabled={isLoading}
                         >
                             Продавец
                         </button>
@@ -90,8 +122,12 @@ export default function RegisterForm() {
                 </div>
 
                 <div className="continue-container">
-                    <button className="continue-button" onClick={onSubmit}>
-                        Продолжить
+                    <button 
+                        className="continue-button" 
+                        onClick={onSubmit}
+                        disabled={isLoading}
+                    >
+                        {isLoading ? 'Загрузка...' : 'Продолжить'}
                     </button>
                 </div>
             </div>

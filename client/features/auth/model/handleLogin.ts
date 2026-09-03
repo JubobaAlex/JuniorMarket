@@ -12,11 +12,15 @@ async function handleLogin(data:Pick<authData , 'email' | 'password'>) {
                     body: JSON.stringify(data),
                 },
             );
+              if (response.status === 401) {
+                throw new Error('Invalid credentials');
+            }
             if(!response.ok) {
                  const error = await response.json();
                     console.log(error);
                     throw new Error(JSON.stringify(error));
             }
+            
             return await response.json()
     }
 
