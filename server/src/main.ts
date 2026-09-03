@@ -1,46 +1,73 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, Logger } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
+  const logger = new Logger('Bootstrap');
+  const app = await NestFactory.create(AppModule);
 
-    app.use(cookieParser());
+  app.use(cookieParser());
 
-    app.enableCors({
-        origin: 'http://localhost:3001',
-        credentials: true,
-    });
+  const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'https://client-three-sigma-33.vercel.app',
+    'https://client-three-alpha-57.vercel.app',
+  ];
 
-    app.useGlobalPipes(
-        new ValidationPipe({
-            whitelist: true,
-            transform: true,
-        }),
-    );
+  app.enableCors({
+    origin: (origin, callback) => {
+      if (!origin) {
+        callback(null, true);
+        return;
+      }
+      
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        logger.warn(`❌ CORS blocked: ${origin}`);
+        callback(new Error(`Origin ${origin} not allowed by CORS`));
+      }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+    exposedHeaders: ['Content-Range', 'X-Content-Range'],
+    maxAge: 3600,
+  });
 
-    const config = new DocumentBuilder()
-        .setTitle('JuniorMarket API')
-        .setDescription('Marketplace Backend API')
-        .setVersion('1.0')
-        .addBearerAuth(
-            {
-                type: 'http',
-                scheme: 'bearer',
-                bearerFormat: 'JWT',
-                description: 'Введите JWT токен',
-            },
-            'JWT-auth',
-        )
-        .build();
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      forbidNonWhitelisted: true,
+    }),
+  );
 
-    const document = SwaggerModule.createDocument(app, config);
+  const config = new DocumentBuilder()
+    .setTitle('JuniorMarket API')
+    .setDescription('Marketplace Backend API')
+    .setVersion('1.0')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        description: 'Введите JWT токен',
+      },
+      'JWT-auth',
+    )
+    .build();
 
-    SwaggerModule.setup('api', app, document);
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
 
-    await app.listen(3000);
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
+  logger.log(`🚀 Application is running on: http://localhost:${port}`);
+  logger.log(`📚 Swagger documentation: http://localhost:${port}/api`);
 }
 
 bootstrap();
