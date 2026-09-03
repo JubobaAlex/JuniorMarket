@@ -1,6 +1,8 @@
-import handleLogout from "../model/handleLogout";
+import {handleLogout } from "../model/handleLogout";
 
 global.fetch = jest.fn();
+
+const mockDispatch = jest.fn();
 
 describe('тестируем handleLogout', () => {
     beforeEach(() => {
@@ -12,7 +14,7 @@ describe('тестируем handleLogout', () => {
             ok: true,
         });
 
-        await expect(handleLogout()).resolves.toBeUndefined();
+        await expect(handleLogout(mockDispatch)).resolves.toBeUndefined();
 
         expect(fetch).toHaveBeenCalledTimes(1);
         expect(fetch).toHaveBeenCalledWith(
@@ -20,6 +22,9 @@ describe('тестируем handleLogout', () => {
             {
                 method: 'POST',
                 credentials: 'include',
+                headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                },
             }
         );
     });
@@ -34,7 +39,7 @@ describe('тестируем handleLogout', () => {
             }),
         });
 
-        await expect(handleLogout()).rejects.toThrow(errorMessage);
+        await expect(handleLogout(mockDispatch)).rejects.toThrow(errorMessage);
         
         expect(fetch).toHaveBeenCalledTimes(1);
     });
@@ -45,7 +50,7 @@ describe('тестируем handleLogout', () => {
             json: jest.fn().mockResolvedValueOnce({}),
         });
 
-        await expect(handleLogout()).rejects.toThrow('Ошибка выхода из аккаунта');
+        await expect(handleLogout(mockDispatch)).rejects.toThrow('Ошибка выхода из аккаунта');
         
         expect(fetch).toHaveBeenCalledTimes(1);
     });
@@ -54,7 +59,7 @@ describe('тестируем handleLogout', () => {
         const networkError = new Error('Network error');
         (fetch as jest.Mock).mockRejectedValueOnce(networkError);
 
-        await expect(handleLogout()).rejects.toThrow(networkError);
+        await expect(handleLogout(mockDispatch)).rejects.toThrow(networkError);
         
         expect(fetch).toHaveBeenCalledTimes(1);
     });
@@ -66,7 +71,7 @@ describe('тестируем handleLogout', () => {
             ok: true,
         });
 
-        await handleLogout();
+        await handleLogout(mockDispatch);
 
         expect(fetch).toHaveBeenCalledWith(
             `${apiUrl}/auth/logout`,
@@ -79,7 +84,7 @@ describe('тестируем handleLogout', () => {
             ok: true,
         });
 
-        await handleLogout();
+        await handleLogout(mockDispatch);
 
         expect(fetch).toHaveBeenCalledWith(
             expect.any(String),
@@ -94,7 +99,7 @@ describe('тестируем handleLogout', () => {
             ok: true,
         });
 
-        await handleLogout();
+        await handleLogout(mockDispatch);
 
         expect(fetch).toHaveBeenCalledWith(
             expect.any(String),
@@ -119,7 +124,7 @@ describe('тестируем handleLogout с разными сценариями
             }),
         });
 
-        await expect(handleLogout()).rejects.toThrow('Сессия истекла');
+        await expect(handleLogout(mockDispatch)).rejects.toThrow('Сессия истекла');
     });
 
     test('должен обработать ошибку с кодом 500', async () => {
@@ -131,7 +136,7 @@ describe('тестируем handleLogout с разными сценариями
             }),
         });
 
-        await expect(handleLogout()).rejects.toThrow('Внутренняя ошибка сервера');
+        await expect(handleLogout(mockDispatch)).rejects.toThrow('Внутренняя ошибка сервера');
     });
 
     test('должен обработать ошибку если json вернул не объект', async () => {
@@ -140,7 +145,7 @@ describe('тестируем handleLogout с разными сценариями
             json: jest.fn().mockResolvedValueOnce('string error'),
         });
 
-        await expect(handleLogout()).rejects.toThrow('Ошибка выхода из аккаунта');
+        await expect(handleLogout(mockDispatch)).rejects.toThrow('Ошибка выхода из аккаунта');
     });
 });
 
@@ -163,7 +168,7 @@ describe('тестируем handleLogout с environment variables', () => {
             ok: true,
         });
 
-        await handleLogout();
+        await handleLogout(mockDispatch);
 
         expect(fetch).toHaveBeenCalledWith(
             'undefined/auth/logout',
@@ -178,11 +183,70 @@ describe('тестируем handleLogout с environment variables', () => {
             ok: true,
         });
 
-        await handleLogout();
+        await handleLogout(mockDispatch);
 
         expect(fetch).toHaveBeenCalledWith(
             'https://api.example.com/auth/logout',
             expect.any(Object)
         );
+    });
+});
+
+describe('тестируем вызовы dispatch', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
+    test('должен вызвать setAuthLoading(true) в начале', async () => {
+        (fetch as jest.Mock).mockResolvedValueOnce({
+            ok: true,
+        });
+
+        await handleLogout(mockDispatch);
+
+        expect(mockDispatch).toHaveBeenNthCalledWith(1, expect.objectContaining({
+            type: 'auth/setAuthLoading',
+            payload: true,
+        }));
+    });
+
+    test('должен вызвать clearUser() после успешного запроса', async () => {
+        (fetch as jest.Mock).mockResolvedValueOnce({
+            ok: true,
+        });
+
+        await handleLogout(mockDispatch);
+
+        expect(mockDispatch).toHaveBeenNthCalledWith(2, expect.objectContaining({
+            type: 'auth/clearUser',
+        }));
+    });
+
+    test('должен вызвать setAuthLoading(false) в конце', async () => {
+        (fetch as jest.Mock).mockResolvedValueOnce({
+            ok: true,
+        });
+
+        await handleLogout(mockDispatch);
+
+        expect(mockDispatch).toHaveBeenNthCalledWith(3, expect.objectContaining({
+            type: 'auth/setAuthLoading',
+            payload: false,
+        }));
+    });
+
+    test('должен вызвать setAuthLoading(false) при ошибке', async () => {
+        (fetch as jest.Mock).mockRejectedValueOnce(new Error('Network error'));
+
+        try {
+            await handleLogout(mockDispatch);
+        } catch (error) {
+            // ignore
+        }
+
+        expect(mockDispatch).toHaveBeenLastCalledWith(expect.objectContaining({
+            type: 'auth/setAuthLoading',
+            payload: false,
+        }));
     });
 });
