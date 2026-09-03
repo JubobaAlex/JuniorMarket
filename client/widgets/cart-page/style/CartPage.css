@@ -1,0 +1,131 @@
+.container-cart-product {
+    display: flex;
+    margin: 30px;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 0.1px solid #2e2e2e;
+}
+
+.pre-container-cart-product {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.pre-container-cart-product img {
+    height: 100px;
+    width: 100px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.pre-container-cart-product span {
+    font-size: 18px;
+    font-weight: 500;
+}
+.container-message-cart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+.button-buy-product,
+.button-delete-product {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.button-buy-product {
+    position: relative;
+    background-color: #4caf50;
+}
+
+.button-buy-product:hover {
+    background-color: #388e3c;
+    transform: scale(1.05);
+}
+
+.button-buy-product::before {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 14px;
+    background-color: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.button-buy-product::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 14px;
+    background-color: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.button-delete-product {
+    background-color: #f44336;
+    position: relative;
+}
+
+.button-delete-product:hover {
+    background-color: #d32f2f;
+    transform: scale(1.05);
+}
+
+.button-delete-product::before {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 14px;
+    background-color: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.button-delete-product::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 14px;
+    background-color: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.order-btn {
+    padding: 10px 24px;
+    background-color: #ea580c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.order-btn:hover {
+    background-color: #ce4e08;
+    transform: scale(1.02);
+}
+
+
+@media (max-width: 480px) {
+    .pre-container-cart-product {
+        width: 100%;
+    }
+}

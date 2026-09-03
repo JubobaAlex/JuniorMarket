@@ -1,8 +1,9 @@
+import Link from 'next/link'
 import '../style/CartButton.css'
 export default function CartButton() {
     return (
-        <button className="container-cart">
+        <Link href={'/cart'} className="container-cart">
             <img src="/img/cart.png" alt="корзина" />
-        </button>
+        </Link>
     )
 }
