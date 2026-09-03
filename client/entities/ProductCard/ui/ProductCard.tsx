@@ -1,7 +1,7 @@
 'use client'
 import { productInterface } from "../types/productInterface"
 import '../style/ProductCard.css'
-import hadleCreateProduct from "../model/hadleCreateProduct"
+import hadleCreateProductCart from "../model/hadleCreateProductCart"
 import { useSelector } from "react-redux"
 import { RootState } from "@/app/store"
 interface ProductCardProps {
@@ -17,7 +17,7 @@ export default function ProductCard({product}:ProductCardProps) {
             "productId": data.id,
             "quantity": 1
         }
-        hadleCreateProduct(dataObject)
+        hadleCreateProductCart(dataObject)
     }
     return (
         <div className="product-card-container">
