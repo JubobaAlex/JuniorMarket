@@ -12,11 +12,15 @@ export default function ProfileFeed() {
             (state: RootState) => state.auth.user
     );
     const dispatch = useDispatch()
-    function handleLogoutFun() {
-        handleLogout()
-        dispatch(clearUser())
-        router.push('/')
-    }
+    async function handleLogoutFun() {
+        try {
+            await handleLogout();
+            dispatch(clearUser());
+            router.push('/');
+        } catch (error) {
+            console.error(error);
+        }
+}
     if(!user) return <div style={{display:'flex', justifyContent:'center', margin:'30px'}}>
                             <div className="error-message">Зарегистрируйтесь</div>
                     </div>
