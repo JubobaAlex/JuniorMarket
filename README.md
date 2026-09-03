@@ -13,8 +13,6 @@ Fullstack marketplace приложение, разработанное на **Ne
 * TypeScript
 * Redux Toolkit
 * Tailwind CSS
-* React Hook Form
-* Zod
 * Feature-Sliced Design
 
 ### Backend
