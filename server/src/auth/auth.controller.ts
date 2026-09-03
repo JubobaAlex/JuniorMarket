@@ -45,11 +45,11 @@ export class AuthController {
     const data = await this.authService.login(dto);
 
     response.cookie('jwt', data.access_token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+});
 
     return {
         message: 'Успешная авторизация',
