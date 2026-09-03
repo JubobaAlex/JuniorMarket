@@ -17,7 +17,9 @@ export default function ProfileFeed() {
         dispatch(clearUser())
         router.push('/')
     }
-    
+    if(!user) return <div style={{display:'flex', justifyContent:'center', margin:'30px'}}>
+                            <div className="error-message">Зарегистрируйтесь</div>
+                    </div>
     return (
         <div style={{display:'flex', justifyContent:'center', margin:'30px'}}>
             <div className="container-profile">
