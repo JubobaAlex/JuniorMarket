@@ -24,7 +24,9 @@ import { CurrentUser } from './decorators/current-user.decorator';
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+  ) {}
 
   @ApiOperation({
     summary: 'Регистрация пользователя',
@@ -39,8 +41,8 @@ export class AuthController {
   })
   @Post('login')
   async login(
-      @Body() dto: LoginDto,
-      @Res({ passthrough: true }) response: Response,
+    @Body() dto: LoginDto,
+    @Res({ passthrough: true }) response: Response,
   ) {
     const data = await this.authService.login(dto);
 
@@ -49,12 +51,12 @@ export class AuthController {
       secure: true,
       sameSite: 'none',
       maxAge: 7 * 24 * 60 * 60 * 1000,
-});
+    });
 
     return {
-        message: 'Успешная авторизация',
+      message: 'Успешная авторизация',
     };
-}
+  }
 
   @ApiBearerAuth('JWT-auth')
   @UseGuards(JwtAuthGuard)
@@ -65,16 +67,20 @@ export class AuthController {
   me(@CurrentUser() user: any) {
     return user;
   }
+
   @Post('logout')
-  logout(@Res({ passthrough: true }) response: Response) {
+  logout(
+    @Res({ passthrough: true }) response: Response,
+  ) {
     response.clearCookie('jwt', {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
     });
 
     return {
-        message: 'Выход выполнен успешно',
+      message: 'Выход выполнен успешно',
     };
+  }
 }
-}
+

@@ -16,10 +16,13 @@ export default function ProfileFeed() {
         try {
             await handleLogout(dispatch);
             router.push('/');
+            router.refresh();
         } catch (error) {
             console.error(error);
         }
     }
+
+
 
     if (!user) {
         return (
