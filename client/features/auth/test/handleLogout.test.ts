@@ -1,4 +1,4 @@
-import {handleLogout } from "../model/handleLogout";
+import { handleLogout } from "../model/handleLogout";
 
 global.fetch = jest.fn();
 
@@ -22,9 +22,6 @@ describe('тестируем handleLogout', () => {
             {
                 method: 'POST',
                 credentials: 'include',
-                headers: {
-                    'Cache-Control': 'no-cache, no-store, must-revalidate',
-                },
             }
         );
     });
