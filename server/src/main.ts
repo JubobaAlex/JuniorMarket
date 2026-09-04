@@ -20,8 +20,7 @@ async function bootstrap() {
     const allowedOrigins = [
         'http://localhost:3000',
         'http://localhost:3001',
-        'https://client-three-sigma-33.vercel.app',
-        'https://client-three-alpha-57.vercel.app',
+        'https://server-two-wine-78.vercel.app/'
     ];
 
     app.enableCors({
