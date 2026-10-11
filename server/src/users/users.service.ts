@@ -27,4 +27,15 @@ export class UsersService {
       data,
     });
   }
+  async delete(id: number) {
+  return this.prisma.$transaction(async (tx) => {
+    await tx.cart.deleteMany({
+      where: { userId: id },
+    });
+
+    return tx.user.delete({
+      where: { id },
+    });
+  });
+}
 }

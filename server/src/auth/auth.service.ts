@@ -1,3 +1,4 @@
+
 import {
   BadRequestException,
   Injectable,
@@ -65,5 +66,10 @@ export class AuthService {
     return {
       access_token: accessToken,
     };
+  }
+  async deleteAccount(userId: number) {
+  await this.usersService.delete(userId);
+
+    return { message: 'Аккаунт успешно удалён' };
   }
 }
