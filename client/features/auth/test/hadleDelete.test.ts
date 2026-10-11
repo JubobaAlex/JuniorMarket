@@ -1,4 +1,4 @@
-import handleDelete from "../model/handleDelete";
+import handleDelete from '../model/handleDelete';
 
 describe('handleDelete', () => {
     beforeEach(() => {
@@ -10,35 +10,33 @@ describe('handleDelete', () => {
         jest.restoreAllMocks();
     });
 
-    test('должен вернуть null при успешном удалении (204)', async () => {
-        (global.fetch as jest.Mock).mockResolvedValue({
-            ok: true,
-            status: 204,
-        });
-
-        const result = await handleDelete();
-
-        expect(result).toBeNull();
-    });
-
-    test('должен вернуть json при успешном удалении с телом ответа', async () => {
+    test('должен вернуть данные при успешном удалении', async () => {
         const mockResponse = { message: 'Аккаунт удалён' };
 
         (global.fetch as jest.Mock).mockResolvedValue({
             ok: true,
-            status: 200,
             json: async () => mockResponse,
         });
 
         const result = await handleDelete();
 
         expect(result).toEqual(mockResponse);
+        expect(result.message).toBe('Аккаунт удалён');
     });
 
-    test('должен выбросить ошибку при неудачном удалении', async () => {
+    test('должен выбросить ошибку с message из ответа при неудачном удалении', async () => {
         (global.fetch as jest.Mock).mockResolvedValue({
             ok: false,
-            status: 500,
+            json: async () => ({ message: 'Пользователь не найден' }),
+        });
+
+        await expect(handleDelete()).rejects.toThrow('Пользователь не найден');
+    });
+
+    test('должен выбросить дефолтную ошибку, если message отсутствует', async () => {
+        (global.fetch as jest.Mock).mockResolvedValue({
+            ok: false,
+            json: async () => ({}),
         });
 
         await expect(handleDelete()).rejects.toThrow(
@@ -46,16 +44,42 @@ describe('handleDelete', () => {
         );
     });
 
+    test('должен выбросить дефолтную ошибку, если json() падает', async () => {
+        (global.fetch as jest.Mock).mockResolvedValue({
+            ok: false,
+            json: async () => {
+                throw new Error('Invalid JSON');
+            },
+        });
+
+        await expect(handleDelete()).rejects.toThrow(
+            'Не удалось удалить аккаунт',
+        );
+    });
+
+    test('должен вернуть null при успешном ответе без тела', async () => {
+        (global.fetch as jest.Mock).mockResolvedValue({
+            ok: true,
+            json: async () => {
+                throw new Error('No content');
+            },
+        });
+
+        const result = await handleDelete();
+
+        expect(result).toBeNull();
+    });
+
     test('должен вызвать fetch с правильными параметрами', async () => {
         (global.fetch as jest.Mock).mockResolvedValue({
             ok: true,
-            status: 204,
+            json: async () => ({}),
         });
 
         await handleDelete();
 
         expect(global.fetch).toHaveBeenCalledWith(
-            'http://localhost:3000/users/delete',
+            'http://localhost:3000/auth/delete',
             {
                 method: 'DELETE',
                 credentials: 'include',
