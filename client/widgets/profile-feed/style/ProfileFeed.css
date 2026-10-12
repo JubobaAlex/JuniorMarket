@@ -1,8 +1,10 @@
 .container-profile {
     border-radius: 12px;
     width: 500px;
-    height: 200px;
+    max-width: 100%;
+    min-height: 200px;
     padding: 20px;
+    box-sizing: border-box;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     border: 0.1px solid #2e2e2e;
 }
@@ -10,36 +12,110 @@
 .container-profile-information {
     display: flex;
     flex-direction: column;
+    gap: 6px;
+    margin-top: 12px;
+    word-break: break-word;
 }
+
 .action-profile-button {
     gap: 20px;
     display: flex;
+    flex-wrap: nowrap;
     margin-top: 20px;
     justify-content: center;
+    align-items: center;
 }
-.container-exit-profile button, .container-delete-profile button, .container-personal-account button {
-    cursor: pointer;    
-    width: 100px;
+
+.container-personal-account,
+.container-exit-profile,
+.container-delete-profile {
+    flex: 1 1 0;
+    display: flex;
+    justify-content: center;
+}
+
+.container-exit-profile button,
+.container-delete-profile button,
+.container-personal-account button {
+    cursor: pointer;
+    width: 100%;
+    max-width: 140px;
     height: 50px;
     border-radius: 12px;
     transition: all 0.2s ease;
     background-color: #ea580c;
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    white-space: nowrap;
 }
+
 .container-delete-profile button {
     background-color: #e21b1b;
 }
-.container-exit-profile button:hover , .container-personal-account button:hover {
+
+.container-exit-profile button:hover,
+.container-personal-account button:hover {
     background-color: #d45008;
     transform: scale(1.02);
 }
+
 .container-delete-profile button:hover {
     background-color: #dd1e1e;
     transform: scale(1.02);
-} 
+}
 
 .error-message {
     display: flex;
     justify-content: center;
     margin: 30px;
     font-size: 20px;
+}
+
+@media (max-width: 768px) {
+    .container-profile {
+        width: 100%;
+        padding: 16px;
+    }
+
+    .action-profile-button {
+        gap: 10px;
+    }
+
+    .container-exit-profile button,
+    .container-delete-profile button,
+    .container-personal-account button {
+        height: 46px;
+        font-size: 13px;
+        padding: 0 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container-profile {
+        padding: 14px;
+        min-height: unset;
+    }
+
+    .container-profile-information {
+        font-size: 14px;
+    }
+
+    .action-profile-button {
+        gap: 8px;
+    }
+
+    .container-exit-profile button,
+    .container-delete-profile button,
+    .container-personal-account button {
+        height: 44px;
+        font-size: 12px;
+        padding: 0 4px;
+        border-radius: 10px;
+    }
+
+    .error-message {
+        font-size: 16px;
+        margin: 20px;
+    }
 }
