@@ -9,6 +9,7 @@ import { handleLogout } from "@/features/auth/model/handleLogout";
 import { clearUser } from "@/features/auth/model/authSlice";
 import hadleDelete from "@/features/auth/model/handleDelete";
 import Modal from "@/shared/Modal/ui/Modal";
+import Link from "next/link";
 
 export default function ProfileFeed() {
     const router = useRouter();
@@ -78,6 +79,16 @@ export default function ProfileFeed() {
                 </div>
 
                 <div className="action-profile-button">
+                    <div className="container-personal-account">
+                        <button>
+                            <Link
+                            href={'/personalAccount'}
+                                >
+                                    Мои товары
+                            </Link>
+                        </button>
+                    </div>
+                    
                     <div className="container-exit-profile">
                         <button onClick={handleLogoutFun}>Выйти</button>
                     </div>

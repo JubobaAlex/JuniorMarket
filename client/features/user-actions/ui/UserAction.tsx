@@ -16,7 +16,7 @@ export default function UserAction() {
             <AuthButton />
             {user && (
                 <>
-                    {user.role === 'SELLER' && <CreateProductButton />}
+                    {user.role === 'SELLER' && <CreateProductButton /> } 
                     {user.role === 'BUYER' && <CartButton />}
                 </>
             )}

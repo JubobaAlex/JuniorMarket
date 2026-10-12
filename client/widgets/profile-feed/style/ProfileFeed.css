@@ -17,7 +17,7 @@
     margin-top: 20px;
     justify-content: center;
 }
-.container-exit-profile button, .container-delete-profile button {
+.container-exit-profile button, .container-delete-profile button, .container-personal-account button {
     cursor: pointer;    
     width: 100px;
     height: 50px;
@@ -25,10 +25,17 @@
     transition: all 0.2s ease;
     background-color: #ea580c;
 }
-.container-exit-profile button:hover , .container-delete-profile button:hover {
+.container-delete-profile button {
+    background-color: #e21b1b;
+}
+.container-exit-profile button:hover , .container-personal-account button:hover {
     background-color: #d45008;
     transform: scale(1.02);
 }
+.container-delete-profile button:hover {
+    background-color: #dd1e1e;
+    transform: scale(1.02);
+} 
 
 .error-message {
     display: flex;
