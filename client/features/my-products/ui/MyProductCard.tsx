@@ -1,0 +1,48 @@
+'use client'
+
+import { Product } from "@/widgets/cart-page/types/cartInterface";
+import '../style/MyProductCard.css'
+
+type MyProductCardProps = {
+    product: Product;
+};
+
+export default function MyProductCard({ product }: MyProductCardProps) {
+    return (
+        <article className="product-card">
+            <div className="product-card-image-wrapper">
+                <img
+                    src={product.imageUrl}
+                    alt={product.title}
+                    className="product-card-image"
+                />
+            </div>
+
+            <div className="product-card-info">
+                <h3 className="product-card-title">{product.title}</h3>
+
+                {product.description && (
+                    <p className="product-card-description">{product.description}</p>
+                )}
+
+                <div className="product-card-footer">
+                    <span className="product-card-price">{product.price} ₽</span>
+                    <div className="product-card-actions">
+                        <button
+                            type="button"
+                            className="product-card-edit"
+                        >
+                            Изменить
+                        </button>
+                        <button
+                            type="button"
+                            className="product-card-delete"
+                        >
+                            Удалить
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </article>
+    )
+}

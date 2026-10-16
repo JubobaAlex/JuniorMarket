@@ -6,8 +6,8 @@ import {
 
 import { QueryProductDto } from './dto/query-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { PrismaService } from '../prisma/prisma.service';
 import { CreateProductDto } from './dto/create-product.dto';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class ProductService {
@@ -50,14 +50,12 @@ export class ProductService {
                     mode: 'insensitive' as const,
                 },
             }),
-
             ...((minPrice !== undefined ||
                 maxPrice !== undefined) && {
                 price: {
                     ...(minPrice !== undefined && {
                         gte: minPrice,
                     }),
-
                     ...(maxPrice !== undefined && {
                         lte: maxPrice,
                     }),
@@ -70,11 +68,9 @@ export class ProductService {
                 where,
                 skip,
                 take: limit,
-
                 orderBy: {
                     [sortBy]: order,
                 },
-
                 include: {
                     seller: {
                         select: {
@@ -85,15 +81,11 @@ export class ProductService {
                     },
                 },
             }),
-
-            this.prisma.product.count({
-                where,
-            }),
+            this.prisma.product.count({ where }),
         ]);
 
         return {
             products,
-
             pagination: {
                 total,
                 page,
@@ -103,10 +95,20 @@ export class ProductService {
         };
     }
 
+    async findMyProducts(sellerId: number) {
+        return this.prisma.product.findMany({
+            where: {
+                sellerId,
+            },
+            orderBy: {
+                createdAt: 'desc',
+            },
+        });
+    }
+
     async findOne(id: number) {
         const product = await this.prisma.product.findUnique({
             where: { id },
-
             include: {
                 seller: {
                     select: {
@@ -119,9 +121,7 @@ export class ProductService {
         });
 
         if (!product) {
-            throw new NotFoundException(
-                'Product not found',
-            );
+            throw new NotFoundException('Product not found');
         }
 
         return product;
@@ -137,9 +137,7 @@ export class ProductService {
         });
 
         if (!product) {
-            throw new NotFoundException(
-                'Product not found',
-            );
+            throw new NotFoundException('Product not found');
         }
 
         if (product.sellerId !== sellerId) {
@@ -163,9 +161,7 @@ export class ProductService {
         });
 
         if (!product) {
-            throw new NotFoundException(
-                'Product not found',
-            );
+            throw new NotFoundException('Product not found');
         }
 
         if (product.sellerId !== sellerId) {

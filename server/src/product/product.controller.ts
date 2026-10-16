@@ -11,22 +11,16 @@ import {
     UseGuards,
 } from '@nestjs/common';
 
-import {
-    ApiQuery,
-    ApiTags,
-} from '@nestjs/swagger';
+import { ApiQuery, ApiTags } from '@nestjs/swagger';
+import { Role } from '@prisma/client';
 
 import { ProductService } from './product.service';
-
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { QueryProductDto } from './dto/query-product.dto';
 
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
-
-import { Role } from '@prisma/client';
-
 import { Roles } from '../auth/decorators/roles.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
 
@@ -48,10 +42,7 @@ export class ProductController {
             role: Role;
         },
     ) {
-        return this.productService.create(
-            dto,
-            user.id,
-        );
+        return this.productService.create(dto, user.id);
     }
 
     @ApiQuery({
@@ -90,10 +81,21 @@ export class ProductController {
         description: 'Максимальная цена',
     })
     @Get()
-    findAll(
-        @Query() query: QueryProductDto,
-    ) {
+    findAll(@Query() query: QueryProductDto) {
         return this.productService.findAll(query);
+    }
+
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(Role.SELLER)
+    @Get('my')
+    findMyProducts(
+        @CurrentUser() user: {
+            id: number;
+            email: string;
+            role: Role;
+        },
+    ) {
+        return this.productService.findMyProducts(user.id);
     }
 
     @Get(':id')
@@ -115,11 +117,7 @@ export class ProductController {
             role: Role;
         },
     ) {
-        return this.productService.update(
-            id,
-            dto,
-            user.id,
-        );
+        return this.productService.update(id, dto, user.id);
     }
 
     @UseGuards(JwtAuthGuard, RolesGuard)
@@ -133,9 +131,6 @@ export class ProductController {
             role: Role;
         },
     ) {
-        return this.productService.remove(
-            id,
-            user.id,
-        );
+        return this.productService.remove(id, user.id);
     }
 }
