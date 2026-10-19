@@ -4,7 +4,7 @@ import { useState } from 'react';
 import useMyProducts from '../model/useMyProducts';
 import MyProductCard from './MyProductCard';
 import { Product } from '@/widgets/cart-page/types/cartInterface';
-import Modal from '@/shared/modal/ui/Modal';
+import Modal from '@/shared/Modal/ui/Modal';
 
 export default function MyProductsFeed() {
     const { products, isLoading, error, refetch } = useMyProducts();

@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { handleLogout } from "@/features/auth/model/handleLogout";
 import { clearUser } from "@/features/auth/model/authSlice";
 import hadleDelete from "@/features/auth/model/handleDelete";
-import Modal from "@/shared/modal/ui/Modal";
+import Modal from "@/shared/Modal/ui/Modal";
 import Link from "next/link";
 
 export default function ProfileFeed() {
