@@ -2,12 +2,21 @@
 
 import { Product } from "@/widgets/cart-page/types/cartInterface";
 import '../style/MyProductCard.css'
+import handleDeleteProduct from "@/features/create-product/model/handleDeleteProduct";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type MyProductCardProps = {
     product: Product;
 };
 
 export default function MyProductCard({ product }: MyProductCardProps) {
+    const route = useRouter()
+
+    async function deleteProduct(id:number) {
+        await handleDeleteProduct(id)
+        route.push('/')    
+    }
     return (
         <article className="product-card">
             <div className="product-card-image-wrapper">
@@ -32,9 +41,10 @@ export default function MyProductCard({ product }: MyProductCardProps) {
                             type="button"
                             className="product-card-edit"
                         >
-                            Изменить
+                            <Link href={`${product.id}/edit`}>Изменить</Link>
                         </button>
                         <button
+                            onClick={() => deleteProduct(product.id)}
                             type="button"
                             className="product-card-delete"
                         >

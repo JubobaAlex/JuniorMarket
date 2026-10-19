@@ -1,5 +1,6 @@
 {
   "/(page)/(home)/page": "app/(page)/(home)/page.js",
+  "/(page)/[id]/edit/page": "app/(page)/[id]/edit/page.js",
   "/(page)/create/page": "app/(page)/create/page.js",
   "/(page)/personalAccount/page": "app/(page)/personalAccount/page.js",
   "/(page)/profile/page": "app/(page)/profile/page.js"

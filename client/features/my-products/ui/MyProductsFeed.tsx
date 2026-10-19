@@ -11,7 +11,7 @@ export default function MyProductsFeed() {
     const [isErrorModalOpen, setIsErrorModalOpen] = useState(true);
 
     if (isLoading) {
-        return <p style={{ display: 'flex', justifyContent: 'center' }}>Загрузка товаров...</p>;
+        return <p style={{ display: 'flex', justifyContent: 'center',margin:'10px'}}>Загрузка товаров...</p>;
     }
 
     if (error) {
@@ -33,6 +33,9 @@ export default function MyProductsFeed() {
                 )}
             </>
         );
+    }
+    if(products.length === 0) {
+        return <p style={{ display: 'flex', justifyContent: 'center', margin:'10px'}}>Вы не создали ни одного товара</p>
     }
 
     return (
