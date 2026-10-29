@@ -7,6 +7,9 @@ import { addToCart, removeFromCart, clearCart } from "../model/cartPageSlice"
 import updateCartItemQuantity from "../model/updateCartItemQuantity"
 import '../style/CartPage.css'
 import deleteCartItem from "../model/deleteCartItem"
+import CartTotal from "./CartTotal"
+import { CartItem } from "../types/cartInterface"
+import { Cart } from "../types/cartInterface"
 
 export default function CartPage() {
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -19,7 +22,7 @@ export default function CartPage() {
         try {
             setErrorState(null)
             setIsLoading(true)
-            
+
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart`, {
                 credentials: 'include',
                 headers: {
@@ -27,64 +30,76 @@ export default function CartPage() {
                 },
             });
 
+            const raw = await response.text();
+
             if (!response.ok) {
-                const error = await response.json();
-                throw new Error(JSON.stringify(error));
+                throw new Error(raw || `HTTP ${response.status}`);
             }
-            
-            const data = await response.json();
-            
-            dispatch(clearCart())
-            
-            if (data && data.items && Array.isArray(data.items)) {
-                data.items.forEach((item: any) => {
+
+            dispatch(clearCart());
+
+            if (!raw) {
+                return;
+            }
+
+            let data: Cart;
+            try {
+                data = JSON.parse(raw);
+            } catch {
+                console.warn('Невалидный JSON от /cart:', raw);
+                setErrorState('Некорректный ответ сервера');
+                return;
+            }
+
+            if (data && Array.isArray(data.items)) {
+                data.items.forEach((item: CartItem) => {
                     dispatch(addToCart(item));
                 });
-            } 
-            else if (Array.isArray(data)) {
-                data.forEach((item: any) => {
+            } else if (Array.isArray(data)) {
+                data.forEach((item: CartItem) => {
                     dispatch(addToCart(item));
                 });
-            } 
-            else {
+            } else {
                 console.warn('Неизвестная структура:', data);
                 setErrorState('Неизвестная структура данных');
             }
-            
-        } catch(errors) {
+
+        } catch (errors) {
             console.error('Ошибка:', errors);
             setErrorState('Ошибка загрузки корзины');
         } finally {
             setIsLoading(false);
         }
-    },[dispatch])
-    
+    }, [dispatch])
+
     useEffect(() => {
-        getCartItems()
-    }, [])
-    
-    async function addQuantityProduct(product: any) {
+        (async () => {
+            await getCartItems()
+        })()
+    }, [getCartItems])
+
+    async function addQuantityProduct(product: CartItem) {
         const productId = product.productId;
-        
+
         if (updatingItemId === productId) return;
         setUpdatingItemId(productId);
-        
+
         try {
             const newQuantity = product.quantity + 1;
             const data = {
                 productId: productId,
                 quantity: newQuantity
             }
-            
+
             await updateCartItemQuantity(data);
-            
+
             const updatedProduct = {
                 ...product,
                 quantity: newQuantity
             };
             dispatch(addToCart(updatedProduct));
-            
-        } catch(error) {
+
+        } catch (error) {
             console.error('Ошибка при добавлении товара:', error);
             setErrorState('Ошибка обновления количества');
             await getCartItems();
@@ -93,13 +108,13 @@ export default function CartPage() {
         }
     }
 
-    async function deleteQuantityProduct(product: any) {
+    async function deleteQuantityProduct(product: CartItem) {
         const productId = product.productId;
         const newQuantity = product.quantity - 1;
-        
+
         if (updatingItemId === productId) return;
         setUpdatingItemId(productId);
-        
+
         try {
             if (newQuantity <= 0) {
                 await deleteCartItem(productId);
@@ -110,14 +125,14 @@ export default function CartPage() {
                     quantity: newQuantity
                 }
                 await updateCartItemQuantity(data);
-                
+
                 const updatedProduct = {
                     ...product,
                     quantity: newQuantity
                 };
                 dispatch(addToCart(updatedProduct));
             }
-        } catch(error) {
+        } catch (error) {
             console.error('Ошибка при удалении товара:', error);
             setErrorState('Ошибка обновления корзины');
             await getCartItems();
@@ -127,10 +142,10 @@ export default function CartPage() {
     }
 
     return (
-        <div style={{display:'flex', flexDirection:'column'}}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
             {isLoading && <div className="container-message-cart">Загрузка...</div>}
             {errorState && <div className="container-message-cart" style={{ color: 'red' }}>{errorState}</div>}
-            {itemsCart.length === 0 && !isLoading ?  (
+            {itemsCart.length === 0 && !isLoading ? (
                 <div className="container-message-cart">
                     <span>Нету добавленных товаров</span>
                 </div>
@@ -138,32 +153,36 @@ export default function CartPage() {
                 <div>
                     {itemsCart.map((item) => {
                         const isUpdating = updatingItemId === item.productId;
-                        
+
                         return (
                             <div className="container-cart-product" key={item.productId}>
                                 <div className="pre-container-cart-product">
-                                    <img src={item.product.imageUrl} alt={item.product?.title} />
-                                    <div style={{display:'flex',flexDirection:'column',marginLeft:'15px'}}>
+                                    
+                                    <img src={item.product?.imageUrl} alt={item.product?.title} />
+
+                                    <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '15px' }}>
                                         <span>{item.product?.title}</span>
-                                        <span>Цена: {item.product.price} ₽</span>
-                                        
+                                        <span>Цена: {item.product?.price} ₽</span>
+
                                         <span>
                                             {isUpdating ? 'Обновление...' : `Количество: ${item.quantity} шт`}
                                         </span>
-                                        
-                                        <div style={{display:'flex',gap:'20px'}}>
-                                            <button 
-                                                onClick={() => addQuantityProduct(item)} 
+
+                                        <div style={{ display: 'flex', gap: '20px' }}>
+                                            <button
+                                                onClick={() => addQuantityProduct(item)}
                                                 className="button-buy-product"
                                                 disabled={isUpdating}
                                             >
                                             </button>
-                                            <button 
-                                                onClick={() => deleteQuantityProduct(item)} 
+
+                                            <button
+                                                onClick={() => deleteQuantityProduct(item)}
                                                 className="button-delete-product"
                                                 disabled={isUpdating}
                                             >
                                             </button>
+
                                             <button className="order-btn">Заказать</button>
                                         </div>
                                     </div>
@@ -173,6 +192,8 @@ export default function CartPage() {
                     })}
                 </div>
             )}
+
+            <CartTotal />
         </div>
     )
 }

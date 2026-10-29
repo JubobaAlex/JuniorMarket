@@ -1,0 +1,32 @@
+.container-cart-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 0.1px solid #2e2e2e;
+  margin: 30px;
+}
+
+.container-cart-total-button {
+    padding: 10px 24px;
+    background-color: #ea580c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.container-cart-total-button:hover {
+    background-color: #ce4e08;
+    transform: scale(1.02);
+}
+
+.container-cart-total-price span {
+    cursor: pointer;
+    font-size: 20px;
+}

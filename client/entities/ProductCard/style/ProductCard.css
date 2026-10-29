@@ -1,6 +1,6 @@
 .product-card-container {
     width: 250px;
-    height: 410px;
+    height: 450px;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
