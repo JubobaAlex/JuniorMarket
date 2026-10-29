@@ -79,7 +79,8 @@ export default function ProfileFeed() {
                 </div>
 
                 <div className="action-profile-button">
-                    <div className="container-personal-account">
+                    {user.role === 'SELLER' && (
+                        <div className="container-personal-account">
                         <button>
                             <Link
                             href={'/personalAccount'}
@@ -88,6 +89,7 @@ export default function ProfileFeed() {
                             </Link>
                         </button>
                     </div>
+                    )}
                     
                     <div className="container-exit-profile">
                         <button onClick={handleLogoutFun}>Выйти</button>
