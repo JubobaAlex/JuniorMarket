@@ -1,4 +1,4 @@
-import hadleCreateProductCart from "../model/hadleCreateProductCart";
+import hadleCreateProductCart from "../model/handleCreateProductCart";
 import { SendProductInterface } from "../types/SendProductInterface";
 global.fetch = jest.fn();
 

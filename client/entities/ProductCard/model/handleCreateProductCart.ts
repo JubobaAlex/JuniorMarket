@@ -1,5 +1,5 @@
 import { SendProductInterface } from "../types/SendProductInterface";
-async function hadleCreateProductCart(data:SendProductInterface) {
+async function handleCreateProductCart(data:SendProductInterface) {
     try {
         const response = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/cart/items`,
@@ -25,4 +25,4 @@ async function hadleCreateProductCart(data:SendProductInterface) {
         throw errors;
     }
 }
-export default hadleCreateProductCart;
+export default handleCreateProductCart;
