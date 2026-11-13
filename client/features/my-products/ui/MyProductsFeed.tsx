@@ -5,13 +5,14 @@ import useMyProducts from '../model/useMyProducts';
 import MyProductCard from './MyProductCard';
 import { Product } from '@/widgets/cart-page/types/cartInterface';
 import Modal from '@/shared/Modal/ui/Modal';
+import Loading from '@/shared/loading/ui/Loading';
 
 export default function MyProductsFeed() {
     const { products, isLoading, error, refetch } = useMyProducts();
     const [isErrorModalOpen, setIsErrorModalOpen] = useState(true);
 
     if (isLoading) {
-        return <p style={{ display: 'flex', justifyContent: 'center',margin:'10px'}}>Загрузка товаров...</p>;
+        return <Loading centered size={50} overlay />
     }
 
     if (error) {

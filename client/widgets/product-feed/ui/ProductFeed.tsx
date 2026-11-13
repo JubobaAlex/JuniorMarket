@@ -14,6 +14,7 @@ import ProductCard from "@/entities/ProductCard/ui/ProductCard";
 import useProductFeed from "../model/useProductFeed";
 
 import "../style/ProductFeed.css";
+import Loading from "@/shared/loading/ui/Loading";
 
 export default function ProductFeed() {
     const search = useSelector(
@@ -88,7 +89,7 @@ export default function ProductFeed() {
             <div className="product-feed-message">
                 {search
                     ? "Ищем товары..."
-                    : "Загрузка товаров..."}
+                    : <Loading size={50} overlay centered/>}
             </div>
         );
     }

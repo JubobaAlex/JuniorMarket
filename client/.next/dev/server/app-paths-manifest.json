@@ -1,9 +1,10 @@
 {
   "/(page)/(home)/page": "app/(page)/(home)/page.js",
-  "/(page)/[id]/edit/page": "app/(page)/[id]/edit/page.js",
   "/(page)/[id]/product/page": "app/(page)/[id]/product/page.js",
+  "/(page)/cart/page": "app/(page)/cart/page.js",
   "/(page)/create/page": "app/(page)/create/page.js",
   "/(page)/login/page": "app/(page)/login/page.js",
   "/(page)/personalAccount/page": "app/(page)/personalAccount/page.js",
-  "/(page)/profile/page": "app/(page)/profile/page.js"
+  "/(page)/profile/page": "app/(page)/profile/page.js",
+  "/(page)/register/page": "app/(page)/register/page.js"
 }

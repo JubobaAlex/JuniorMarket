@@ -7,6 +7,7 @@ import handleGetProduct from '@/features/create-product/model/handleGetProduct'
 import AddToCartButton from '@/features/add-to-cart/ui/AddToCartButton'
 import { productInterface } from '@/entities/ProductCard/types/productInterface'
 import Modal from '@/shared/Modal/ui/Modal'
+import Loading from '@/shared/loading/ui/Loading'
 
 export default function ProductDetails() {
     const params = useParams()
@@ -29,7 +30,6 @@ export default function ProductDetails() {
         try {
             const result = await handleGetProduct(Number(params.id))
             setProduct(result)
-            console.log(result)
         } catch(err) {
              setError(err instanceof Error ? err : new Error(String(err)))
         }
@@ -40,7 +40,7 @@ export default function ProductDetails() {
     fetchProduct()
 },[params.id])
     
-    if(isLoading) return <div style={{display:'flex', justifyContent:'center', marginTop:'10px'}}>Загрузка...</div>
+    if(isLoading) return <Loading overlay  centered size={50} /> 
     if(error !== null && isErrorModalOpen) return <Modal title='Ошибка' description={error.message} confirmText='Ок' cancelText='Назад' onClose={goHome} onConfirm={closeErrorModal} />
     if (!product) {
         return <div style={{display:'flex', justifyContent:'center', marginTop:'10px'}} className='container-product-cart'>Товар не найден</div>
